@@ -8,35 +8,50 @@ export interface OrdinalsResponse {
 export interface OrdinalUTXO {
   txid: string;
   vout: number;
+  block_height: number;
   value: number;
-  inscriptionId: string;
-  inscriptionNumber: number;
+  sats: SatPoint[];
+  inscriptions: InscriptionPoint[];
+}
+
+export interface SatPoint {
+  number: string;
+  rarity_ranking: string;
+  offset: number;
+}
+
+export interface InscriptionPoint {
+  id: string;
+  offset: number;
+  content_type: string;
 }
 
 export interface InscriptionDetails {
   id: string;
   number: number;
   address: string;
-  genesisAddress: string;
-  genesisBlock: number;
-  genesisTransaction: string;
+  genesis_address: string;
+  genesis_block_height: number;
+  genesis_block_hash: string;
+  genesis_tx_id: string;
+  genesis_fee: number;
+  genesis_timestamp: number;
   location: string;
   output: string;
-  value: string;
-  offset: string;
-  contentLength: number;
-  contentType: string;
+  offset: number;
+  sat_ordinal: number;
+  sat_rarity: string;
+  sat_coinbase_height: number;
+  mime_type: string;
+  content_type: string;
+  content_length: number;
+  tx_id: string;
   timestamp: number;
-  title?: string;
-  content?: string;
-}
-
-export interface PaginatedResponse<T> {
-  items: T[];
-  total: number;
-  page: number;
-  limit: number;
-  hasMore: boolean;
+  value: number;
+  category: string | null;
+  collection_id?: string;
+  collection_name?: string;
+  inscription_floor_price?: number;
 }
 
 export interface OrdinalSearchParams {

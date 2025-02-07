@@ -24,17 +24,47 @@ const DetailsPage: FC = () => {
 
   if (isLoading) {
     return (
-      <main className="container mx-auto px-4 py-8">
-        <div className="text-center">Loading inscription details...</div>
+      <main className="min-h-screen bg-[#18181B]">
+        <div className="bg-black py-4">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center">
+              <Link
+                className="text-white hover:text-gray-300 transition-colors"
+                to="/"
+              >
+                ←
+              </Link>
+              <h1 className="text-xl font-bold text-white ml-4">Details</h1>
+            </div>
+          </div>
+        </div>
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center text-gray-400">Loading inscription details...</div>
+        </div>
       </main>
     );
   }
 
   if (isError) {
     return (
-      <main className="container mx-auto px-4 py-8">
-        <div className="text-center text-red-600">
-          {error?.message || "Failed to load inscription details"}
+      <main className="min-h-screen bg-[#18181B]">
+        <div className="bg-black py-4">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center">
+              <Link
+                className="text-white hover:text-gray-300 transition-colors"
+                to="/"
+              >
+                ←
+              </Link>
+              <h1 className="text-xl font-bold text-white ml-4">Details</h1>
+            </div>
+          </div>
+        </div>
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center text-red-500">
+            {error?.message || "Failed to load inscription details"}
+          </div>
         </div>
       </main>
     );
@@ -42,30 +72,49 @@ const DetailsPage: FC = () => {
 
   if (!details) {
     return (
-      <main className="container mx-auto px-4 py-8">
-        <div className="text-center">No inscription found</div>
+      <main className="min-h-screen bg-[#18181B]">
+        <div className="bg-black py-4">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center">
+              <Link
+                className="text-white hover:text-gray-300 transition-colors"
+                to="/"
+              >
+                ←
+              </Link>
+              <h1 className="text-xl font-bold text-white ml-4">Details</h1>
+            </div>
+          </div>
+        </div>
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center text-gray-400">No inscription found</div>
+        </div>
       </main>
     );
   }
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center mb-8">
-          <Link
-            className="flex items-center text-sm hover:text-primary-500 transition-colors"
-            to="/"
-          >
-            ← Back
-          </Link>
-          <h1 className="text-2xl font-bold ml-4">Details</h1>
+    <main className="min-h-screen bg-[#18181B]">
+      <div className="bg-black py-4">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center">
+            <Link
+              className="text-white hover:text-gray-300 transition-colors"
+              to="/"
+            >
+              ←
+            </Link>
+            <h1 className="text-xl font-bold text-white ml-4">Details</h1>
+          </div>
         </div>
+      </div>
 
-        <div className="space-y-8">
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto space-y-8">
           {contentUrl && (
             <InscriptionContent
-              contentType={details.contentType}
               contentUrl={contentUrl}
+              content_type={details.content_type}
             />
           )}
 

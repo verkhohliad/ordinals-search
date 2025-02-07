@@ -1,32 +1,43 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
 interface InscriptionContentProps {
-  contentType: string;
+  content_type: string;
   contentUrl: string;
 }
 
 export const InscriptionContent: FC<InscriptionContentProps> = ({
-  contentType,
+  content_type,
   contentUrl,
 }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   // Handle image content types
-  if (contentType.startsWith("image/")) {
+  if (content_type.startsWith("image/")) {
     return (
-      <div className="flex justify-center">
+      <div className="flex justify-center bg-[#18181B] rounded-lg p-4">
+        {isLoading && (
+          <div className="text-center py-4 text-gray-400">Loading...</div>
+        )}
+        {error && <div className="text-center py-4 text-red-500">{error}</div>}
         <img
           alt="Inscription content"
-          className="max-w-full h-auto rounded-lg"
-          loading="lazy"
+          className={`max-w-full h-auto rounded-lg ${isLoading ? "hidden" : ""}`}
           src={contentUrl}
+          onError={() => {
+            setIsLoading(false);
+            setError("Failed to load image");
+          }}
+          onLoad={() => setIsLoading(false)}
         />
       </div>
     );
   }
 
   // Handle text content types
-  if (contentType.startsWith("text/") || contentType === "application/json") {
+  if (content_type.startsWith("text/") || content_type === "application/json") {
     return (
-      <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+      <div className="bg-[#18181B] rounded-lg p-4 overflow-x-auto">
         <pre className="text-gray-100 text-sm">
           <code>{contentUrl}</code>
         </pre>
@@ -36,10 +47,12 @@ export const InscriptionContent: FC<InscriptionContentProps> = ({
 
   // Default fallback for unsupported content types
   return (
-    <div className="text-center py-4">
-      <p>Content type {contentType} is not supported for preview.</p>
+    <div className="text-center py-4 bg-[#18181B] rounded-lg">
+      <p className="text-gray-300">
+        Content type {content_type} is not supported for preview.
+      </p>
       <a
-        className="text-blue-500 hover:text-blue-600 mt-2 inline-block"
+        className="text-blue-400 hover:text-blue-300 mt-2 inline-block"
         href={contentUrl}
         rel="noopener noreferrer"
         target="_blank"

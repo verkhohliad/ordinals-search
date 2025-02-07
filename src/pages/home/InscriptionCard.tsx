@@ -8,18 +8,24 @@ interface InscriptionCardProps {
 }
 
 export const InscriptionCard: FC<InscriptionCardProps> = ({ inscription }) => {
+  const firstInscription = inscription.inscriptions[0];
+
+  if (!firstInscription) return null;
+
+  const shortId = firstInscription.id.slice(0, 8);
+
   return (
     <Link
-      className="block p-4 rounded-lg border border-gray-200 hover:border-primary-500 transition-colors"
-      to={`/inscription/${inscription.inscriptionId}`}
+      className="block p-4 rounded-lg bg-[#27272A] hover:bg-[#3F3F46] transition-colors"
+      to={`/inscription/${firstInscription.id}`}
     >
       <div className="flex items-center justify-between">
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-gray-900 truncate">
-            Inscription {inscription.inscriptionNumber}
+          <h3 className="text-lg font-medium text-white truncate">
+            Inscription {shortId}
           </h3>
-          <p className="mt-1 text-sm text-gray-500 truncate">
-            ID: {inscription.inscriptionId}
+          <p className="mt-1 text-sm text-gray-400 truncate">
+            {firstInscription.content_type}
           </p>
         </div>
         <div className="ml-4">
@@ -39,7 +45,7 @@ export const InscriptionCard: FC<InscriptionCardProps> = ({ inscription }) => {
         </div>
       </div>
       <div className="mt-2">
-        <p className="text-sm text-gray-600">Value: {inscription.value} sats</p>
+        <p className="text-sm text-gray-400">Value: {inscription.value} sats</p>
       </div>
     </Link>
   );

@@ -11,34 +11,24 @@ export const InscriptionMetadata: FC<InscriptionMetadataProps> = ({
 }) => {
   const metadataFields = [
     { label: "Inscription ID", value: details.id },
-    { label: "Number", value: details.number },
     { label: "Owner Address", value: details.address },
-    { label: "Genesis Address", value: details.genesisAddress },
-    { label: "Genesis Block", value: details.genesisBlock },
-    { label: "Genesis Transaction", value: details.genesisTransaction },
+    { label: "Output Value", value: `${details.value} sats` },
+    { label: "Content Type", value: details.content_type },
+    { label: "Content Length", value: `${details.content_length} bytes` },
     { label: "Location", value: details.location },
-    { label: "Output Value", value: details.value },
-    { label: "Content Type", value: details.contentType },
-    { label: "Content Length", value: `${details.contentLength} bytes` },
-    {
-      label: "Timestamp",
-      value: new Date(details.timestamp * 1000).toLocaleString(),
-    },
+    { label: "Genesis Transaction", value: details.genesis_tx_id },
   ];
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-xl font-semibold">Attributes</h2>
-      <div className="grid gap-4">
+    <div className="bg-black rounded-lg p-6">
+      <h2 className="text-xl font-bold text-white mb-6">
+        Inscription {details.number}
+      </h2>
+      <div className="space-y-4">
         {metadataFields.map(({ label, value }) => (
-          <div
-            key={label}
-            className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg"
-          >
-            <div className="text-sm text-gray-600 dark:text-gray-400">
-              {label}
-            </div>
-            <div className="mt-1 font-mono text-sm break-all">
+          <div key={label} className="space-y-1">
+            <div className="text-sm text-gray-400">{label}</div>
+            <div className="text-sm text-white font-mono break-all bg-[#18181B] p-3 rounded">
               {value?.toString() || "N/A"}
             </div>
           </div>

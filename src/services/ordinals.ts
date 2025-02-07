@@ -56,6 +56,14 @@ api.interceptors.response.use(
       throw new Error("No inscriptions found for this address");
     }
 
+    if (error.response?.status === 400) {
+      throw new Error("Invalid Bitcoin address");
+    }
+
+    if (error.response?.status === 429) {
+      throw new Error("Too many requests. Please try again later.");
+    }
+
     throw new Error(
       error.response?.data?.message || "An error occurred while fetching data",
     );

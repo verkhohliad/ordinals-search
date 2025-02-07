@@ -13,19 +13,27 @@ interface ResultsListProps {
 }
 
 export const ResultsList: FC<ResultsListProps> = ({ address }) => {
-  const page = useSearchStore.use.page();
   const limit = useSearchStore.use.limit();
-  const setPage = useSearchStore.use.setPage();
 
-  const { data, isLoading, isError, error } = useOrdinalUtxos({
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useOrdinalUtxos({
     address,
-    page,
     limit,
   });
 
-  if (isLoading && page === 1) {
+  // Flatten all pages into a single array of items
+  const items = data?.pages.flatMap((page) => page.items) ?? [];
+
+  if (isLoading && !items.length) {
     return (
-      <div className="text-center py-8">
+      <div className="text-center py-8 text-gray-400">
         <p>Loading inscriptions...</p>
       </div>
     );
@@ -33,37 +41,39 @@ export const ResultsList: FC<ResultsListProps> = ({ address }) => {
 
   if (isError) {
     return (
-      <div className="text-center py-8 text-red-600">
+      <div className="text-center py-8 text-red-500">
         <p>{error?.message || "Failed to load inscriptions"}</p>
       </div>
     );
   }
 
-  if (!data?.items.length) {
+  if (!items.length) {
     return (
-      <div className="text-center py-8">
+      <div className="text-center py-8 text-gray-400">
         <p>No inscriptions found for this address.</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-xl font-semibold">Results</h2>
+    <div className="space-y-4">
       <div className="grid gap-4">
-        {data.items.map((inscription: OrdinalUTXO) => (
-          <InscriptionCard key={inscription.txid} inscription={inscription} />
+        {items.map((inscription: OrdinalUTXO) => (
+          <InscriptionCard
+            key={`${inscription.txid}-${inscription.vout}`}
+            inscription={inscription}
+          />
         ))}
       </div>
-      {data.hasMore && (
-        <div className="text-center pt-4">
+      {hasNextPage && (
+        <div className="text-center pt-6">
           <Button
-            disabled={isLoading}
+            className="bg-[#3F3F46] text-white hover:bg-[#52525B] transition-colors"
+            disabled={isFetchingNextPage}
             size="lg"
-            variant="ghost"
-            onPress={() => setPage(page + 1)}
+            onPress={() => fetchNextPage()}
           >
-            {isLoading ? "Loading..." : "Load more"}
+            {isFetchingNextPage ? "Loading..." : "Load more"}
           </Button>
         </div>
       )}

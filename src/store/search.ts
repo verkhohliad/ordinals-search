@@ -6,20 +6,45 @@ import { DEFAULT_PAGE_SIZE } from "@/config/api";
 
 interface SearchState {
   address: string;
-  page: number;
   limit: number;
   setAddress: (address: string) => void;
-  setPage: (page: number) => void;
+  syncWithUrl: (params: { address?: string }) => void;
   reset: () => void;
 }
 
 const useSearchStoreBase = create<SearchState>((set) => ({
   address: "",
-  page: 1,
   limit: DEFAULT_PAGE_SIZE,
-  setAddress: (address) => set({ address, page: 1 }), // Reset page when address changes
-  setPage: (page) => set({ page }),
-  reset: () => set({ address: "", page: 1 }),
+
+  setAddress: (address) => {
+    set({ address });
+
+    // Update URL
+    const url = new URL(window.location.href);
+
+    if (address) {
+      url.searchParams.set("address", address);
+    } else {
+      url.searchParams.delete("address");
+    }
+    window.history.pushState({}, "", url.toString());
+  },
+
+  syncWithUrl: (params) => {
+    if (params.address) {
+      set({ address: params.address });
+    }
+  },
+
+  reset: () => {
+    set({ address: "" });
+
+    // Clear URL params
+    const url = new URL(window.location.href);
+
+    url.searchParams.delete("address");
+    window.history.pushState({}, "", url.toString());
+  },
 }));
 
 // auto-selectors for better performance

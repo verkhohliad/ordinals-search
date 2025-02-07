@@ -1,14 +1,20 @@
-import { FC, FormEvent, useState } from "react";
+import { FC, FormEvent, useState, useId } from "react";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 
 interface SearchInputProps {
-  title: string;
+  buttonText?: string;
+  defaultValue?: string;
   onSearch?: (address: string) => void;
 }
 
-export const SearchInput: FC<SearchInputProps> = ({ title, onSearch }) => {
-  const [inputValue, setInputValue] = useState("");
+export const SearchInput: FC<SearchInputProps> = ({
+  buttonText = "Look up",
+  defaultValue = "",
+  onSearch,
+}) => {
+  const [inputValue, setInputValue] = useState(defaultValue);
+  const inputId = useId();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -18,12 +24,11 @@ export const SearchInput: FC<SearchInputProps> = ({ title, onSearch }) => {
   };
 
   return (
-    <form className="w-full max-w-2xl mx-auto" onSubmit={handleSubmit}>
-      <div className="flex flex-col sm:flex-row gap-4">
+    <form onSubmit={handleSubmit}>
+      <div className="space-y-4">
         <Input
-          className="flex-1"
-          label="Owner Bitcoin Address"
-          labelPlacement="outside"
+          className="w-full bg-[#18181B] text-white"
+          id={inputId}
           placeholder="Enter Bitcoin wallet address"
           size="lg"
           type="text"
@@ -31,12 +36,12 @@ export const SearchInput: FC<SearchInputProps> = ({ title, onSearch }) => {
           onChange={(e) => setInputValue(e.target.value)}
         />
         <Button
-          className="w-full sm:w-auto"
+          className="w-full bg-[#4F46E5] text-white hover:bg-[#4338CA] transition-colors"
           disabled={!inputValue.trim()}
           size="lg"
           type="submit"
         >
-          {title}
+          {buttonText}
         </Button>
       </div>
     </form>

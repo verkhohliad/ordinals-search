@@ -1,6 +1,6 @@
 import type { OrdinalSearchParams } from "@/types/ordinals";
 
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 import { ordinalsApi } from "@/services/ordinals";
 
@@ -10,11 +10,14 @@ export const QUERY_KEYS = {
 } as const;
 
 export function useOrdinalUtxos(params: OrdinalSearchParams) {
-  return useQuery({
-    queryKey: [QUERY_KEYS.ordinalUtxos, params.address, params.page],
-    queryFn: () => ordinalsApi.getOrdinalUtxos(params),
+  return useInfiniteQuery({
+    queryKey: [QUERY_KEYS.ordinalUtxos, params.address],
+    queryFn: ({ pageParam = 1 }) =>
+      ordinalsApi.getOrdinalUtxos({ ...params, page: pageParam }),
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.hasMore ? allPages.length + 1 : undefined,
     enabled: !!params.address,
-    placeholderData: (previousData) => previousData,
+    initialPageParam: 1,
   });
 }
 
