@@ -12,11 +12,33 @@ export const InscriptionMetadata: FC<InscriptionMetadataProps> = ({
   const metadataFields = [
     { label: "Inscription ID", value: details.id },
     { label: "Owner Address", value: details.address },
+    { label: "Collection ID", value: details.collection_id || "N/A" },
+    { label: "Collection Name", value: details.collection_name || "N/A" },
+    {
+      label: "Inscription Floor Price",
+      value: `${details.inscription_floor_price} sats`,
+    },
     { label: "Output Value", value: `${details.value} sats` },
     { label: "Content Type", value: details.content_type },
     { label: "Content Length", value: `${details.content_length} bytes` },
     { label: "Location", value: details.location },
     { label: "Genesis Transaction", value: details.genesis_tx_id },
+    { label: "Satellite Ordinal", value: details.sat_ordinal },
+    { label: "Satellite Rarity", value: details.sat_rarity },
+    { label: "Satellite Coinbase Height", value: details.sat_coinbase_height },
+    { label: "Genesis Block Height", value: details.genesis_block_height },
+    { label: "Genesis Fee", value: `${details.genesis_fee} sats` },
+    {
+      label: "Genesis Timestamp",
+      value: new Date(details.genesis_timestamp * 1000).toLocaleString(),
+    },
+    { label: "MIME Type", value: details.mime_type },
+    { label: "Transaction ID", value: details.tx_id },
+    {
+      label: "Timestamp",
+      value: new Date(details.timestamp * 1000).toLocaleString(),
+    },
+    { label: "Category", value: details.category || "N/A" },
   ];
 
   return (
