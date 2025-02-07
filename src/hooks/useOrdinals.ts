@@ -22,12 +22,13 @@ export function useOrdinalUtxos(params: OrdinalSearchParams) {
 }
 
 export function useInscriptionDetails(
-  address: string,
+  address: string | undefined,
   inscriptionId: string | undefined,
 ) {
   return useQuery({
     queryKey: [QUERY_KEYS.inscriptionDetails, address, inscriptionId],
     queryFn: () => {
+      if (!address) throw new Error("Address is required");
       if (!inscriptionId) throw new Error("Inscription ID is required");
 
       return ordinalsApi.getInscriptionDetails(address, inscriptionId);

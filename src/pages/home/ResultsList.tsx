@@ -61,6 +61,7 @@ export const ResultsList: FC<ResultsListProps> = ({ address }) => {
         {items.map((inscription: OrdinalUTXO) => (
           <InscriptionCard
             key={`${inscription.txid}-${inscription.vout}`}
+            address={address}
             inscription={inscription}
           />
         ))}

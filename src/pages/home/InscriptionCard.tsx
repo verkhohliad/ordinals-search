@@ -5,9 +5,13 @@ import { Link } from "react-router-dom";
 
 interface InscriptionCardProps {
   inscription: OrdinalUTXO;
+  address: string;
 }
 
-export const InscriptionCard: FC<InscriptionCardProps> = ({ inscription }) => {
+export const InscriptionCard: FC<InscriptionCardProps> = ({
+  inscription,
+  address,
+}) => {
   const firstInscription = inscription.inscriptions[0];
 
   if (!firstInscription) return null;
@@ -17,7 +21,7 @@ export const InscriptionCard: FC<InscriptionCardProps> = ({ inscription }) => {
   return (
     <Link
       className="block p-4 rounded-lg bg-[#27272A] hover:bg-[#3F3F46] transition-colors"
-      to={`/inscription/${firstInscription.id}`}
+      to={`/inscription/${address}/${firstInscription.id}`}
     >
       <div className="flex items-center justify-between">
         <div className="flex-1 min-w-0">

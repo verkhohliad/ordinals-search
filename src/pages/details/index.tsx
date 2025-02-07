@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import { useSearchStore } from "@/store/search";
 import {
   useInscriptionDetails,
   useInscriptionContentUrl,
@@ -10,8 +9,7 @@ import { InscriptionContent } from "@/pages/details/InscriptionContent.tsx";
 import { InscriptionMetadata } from "@/pages/details/InscriptionMetadata.tsx";
 
 const DetailsPage: FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const address = useSearchStore((state) => state.address);
+  const { id, address } = useParams<{ id: string; address: string }>();
 
   const {
     data: details,
@@ -39,7 +37,9 @@ const DetailsPage: FC = () => {
           </div>
         </div>
         <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-gray-400">Loading inscription details...</div>
+          <div className="text-center text-gray-400">
+            Loading inscription details...
+          </div>
         </div>
       </main>
     );
