@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 
 interface InscriptionContentProps {
-  content_type: string;
+  content_type?: string;
   contentUrl: string;
 }
 
@@ -13,7 +13,7 @@ export const InscriptionContent: FC<InscriptionContentProps> = ({
   const [error, setError] = useState<string | null>(null);
 
   // Handle image content types
-  if (content_type.startsWith("image/")) {
+  if (content_type?.startsWith("image/")) {
     return (
       <div className="flex justify-center bg-[#18181B] rounded-lg p-4">
         {isLoading && (
@@ -36,23 +36,11 @@ export const InscriptionContent: FC<InscriptionContentProps> = ({
     );
   }
 
-  // Handle text content types
-  if (content_type.startsWith("text/") || content_type === "application/json") {
-    return (
-      <div className="bg-[#18181B] rounded-lg p-4 overflow-x-auto">
-        <pre className="text-gray-100 text-sm">
-          <code>{contentUrl}</code>
-        </pre>
-      </div>
-    );
-  }
-
-  // Default fallback for unsupported content types
   return (
     <div className="text-center py-4 bg-[#18181B] rounded-lg">
-      <p className="text-gray-300">
-        Content type {content_type} is not supported for preview.
-      </p>
+      <div className="flex w-full justify-center">
+        <iframe className="bg-white" src={contentUrl} title="Preview" />
+      </div>
       <a
         className="text-blue-400 hover:text-blue-300 mt-2 inline-block"
         href={contentUrl}
