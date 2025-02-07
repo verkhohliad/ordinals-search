@@ -1,11 +1,13 @@
 import { FC } from "react";
 
+import { ResultsList } from "./ResultsList.tsx";
+
 import { SearchInput } from "@/components/ui/SearchInput";
-import { ResultsList } from "@/components/ui/results-list";
 import { useSearchStore } from "@/store/search";
 
 const HomePage: FC = () => {
   const address = useSearchStore.use.address();
+  const setAddress = useSearchStore.use.setAddress();
 
   return (
     <main className="container mx-auto px-4 py-8 min-h-screen">
@@ -14,7 +16,7 @@ const HomePage: FC = () => {
       </h1>
 
       <div className="space-y-8">
-        <SearchInput />
+        <SearchInput title="Look Up" onSearch={setAddress} />
 
         {address && (
           <div className="mt-8">

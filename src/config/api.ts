@@ -1,5 +1,8 @@
 export const API_BASE_URL = "https://api-3.xverse.app/v1";
-export const CONTENT_BASE_URL = "https://ord.xverse.app/content";
+
+// use another base url for content, cause https://ord.xverse.app/content is not working
+// export const CONTENT_BASE_URL = "https://ord.xverse.app/content";
+export const CONTENT_BASE_URL = "https://ordinals.com/preview";
 
 export const API_ENDPOINTS = {
   ordinalUtxo: (address: string) => `/address/${address}/ordinal-utxo`,

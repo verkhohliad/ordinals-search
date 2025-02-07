@@ -2,21 +2,18 @@ import { FC, FormEvent, useState } from "react";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 
-import { useSearchStore } from "@/store/search";
-
 interface SearchInputProps {
+  title: string;
   onSearch?: (address: string) => void;
 }
 
-export const SearchInput: FC<SearchInputProps> = ({ onSearch }) => {
+export const SearchInput: FC<SearchInputProps> = ({ title, onSearch }) => {
   const [inputValue, setInputValue] = useState("");
-  const setAddress = useSearchStore.use.setAddress();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
 
-    setAddress(inputValue.trim());
     onSearch?.(inputValue.trim());
   };
 
@@ -39,7 +36,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onSearch }) => {
           size="lg"
           type="submit"
         >
-          Look up
+          {title}
         </Button>
       </div>
     </form>
