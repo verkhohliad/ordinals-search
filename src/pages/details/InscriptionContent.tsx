@@ -23,7 +23,9 @@ export const InscriptionContent: FC<InscriptionContentProps> = ({
         <img
           alt="Inscription content"
           className={`max-w-full h-auto rounded-lg ${isLoading ? "hidden" : ""}`}
+          height={300}
           src={contentUrl}
+          width={300}
           onError={() => {
             setIsLoading(false);
             setError("Failed to load image");
