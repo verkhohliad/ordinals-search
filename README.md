@@ -41,7 +41,7 @@ A React application for searching and viewing Bitcoin Ordinal inscriptions. This
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone git@github.com:verkhohliad/ordinals-search.git
 cd ordinal-search
 ```
 
